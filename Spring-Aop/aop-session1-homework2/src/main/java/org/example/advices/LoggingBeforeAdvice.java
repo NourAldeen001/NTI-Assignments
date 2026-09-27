@@ -1,0 +1,12 @@
+package org.example.advices;
+
+import org.springframework.aop.MethodBeforeAdvice;
+
+import java.lang.reflect.Method;
+
+public class LoggingBeforeAdvice implements MethodBeforeAdvice {
+    @Override
+    public void before(Method method, Object[] args, Object target) throws Throwable {
+        System.out.println("BEFORE LOGGING: method name " + method.getName() + " target: " + target);
+    }
+}
