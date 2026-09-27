@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>org.example</groupId>
+    <artifactId>spring-mvc-session3-homework2</artifactId>
+    <version>1.0-SNAPSHOT</version>
+    <packaging>war</packaging>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>6.1.14</spring.version>
+        <jackson.version>2.17.2</jackson.version>
+        <openapi.generator.version>7.8.0</openapi.generator.version>
+        <swagger.ui.version>5.17.14</swagger.ui.version>
+    </properties>
+
+    <dependencies>
+        <!--  Spring MVC only: spring-web + spring-webmvc pull in core/beans/context/expression  -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+        <!--  Servlet API is provided by Tomcat 10+ (jakarta.* namespace)  -->
+        <dependency>
+            <groupId>jakarta.servlet</groupId>
+            <artifactId>jakarta.servlet-api</artifactId>
+            <version>6.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <!--  JSON (de)serialization used by MappingJackson2HttpMessageConverter  -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <!--  Bean Validation: the generated models carry @NotNull/@Size/@Email  -->
+        <dependency>
+            <groupId>jakarta.validation</groupId>
+            <artifactId>jakarta.validation-api</artifactId>
+            <version>3.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate.validator</groupId>
+            <artifactId>hibernate-validator</artifactId>
+            <version>8.0.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.expressly</groupId>
+            <artifactId>expressly</artifactId>
+            <version>5.0.0</version>
+        </dependency>
+        <!--  @Generated annotation used on generated sources  -->
+        <dependency>
+            <groupId>jakarta.annotation</groupId>
+            <artifactId>jakarta.annotation-api</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+        <!--  Swagger UI served as a static webjar (no springdoc: that one needs Spring Boot)  -->
+        <dependency>
+            <groupId>org.webjars</groupId>
+            <artifactId>swagger-ui</artifactId>
+            <version>${swagger.ui.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>2.0.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>5.10.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring.version}</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+    <plugins>
+        <!--  ============================================================
+                   THE PLUGIN YOU WERE THINKING OF.
+                   Contract-first: reads src/main/resources/openapi/customer-api.yaml
+                   and generates, into target/generated-sources/openapi:
+                     - com.example.customerapi.api.CustomersApi   (the interface)
+                     - com.example.customerapi.model.*            (the DTOs)
+                   Your @RestController then just "implements CustomersApi".
+                   ============================================================  -->
+        <plugin>
+            <groupId>org.openapitools</groupId>
+            <artifactId>openapi-generator-maven-plugin</artifactId>
+            <version>${openapi.generator.version}</version>
+            <executions>
+                <execution>
+                    <id>generate-customer-api</id>
+                    <goals>
+                        <goal>generate</goal>
+                    </goals>
+                    <configuration>
+                        <inputSpec>${project.basedir}/src/main/resources/openapi/customer-api.yaml</inputSpec>
+                        <generatorName>spring</generatorName>
+                        <apiPackage>com.example.customerapi.api</apiPackage>
+                        <modelPackage>com.example.customerapi.model</modelPackage>
+                        <generateApiTests>false</generateApiTests>
+                        <generateModelTests>false</generateModelTests>
+                        <generateApiDocumentation>false</generateApiDocumentation>
+                        <generateModelDocumentation>false</generateModelDocumentation>
+                        <configOptions>
+                            <!--  generate ONLY the interface, no controller stubs, no app class  -->
+                            <interfaceOnly>true</interfaceOnly>
+                            <!--  no default methods: the compiler forces us to implement every operation  -->
+                            <defaultInterfaces>false</defaultInterfaces>
+                            <skipDefaultInterface>true</skipDefaultInterface>
+                            <!--  one interface per tag -> tag "customers" gives CustomersApi  -->
+                            <useTags>true</useTags>
+                            <!--  methods return ResponseEntity<T> so we control status + headers  -->
+                            <useResponseEntity>true</useResponseEntity>
+                            <!--  jakarta.* imports, required by Spring 6 / Tomcat 10  -->
+                            <useJakartaEe>true</useJakartaEe>
+                            <useBeanValidation>true</useBeanValidation>
+                            <performBeanValidation>true</performBeanValidation>
+                            <!--  no springdoc/swagger-core annotations: they drag in Boot-oriented deps  -->
+                            <documentationProvider>none</documentationProvider>
+                            <annotationLibrary>none</annotationLibrary>
+                            <!--  keep params plain instead of Optional<T>  -->
+                            <useOptional>false</useOptional>
+                            <!--  avoid the JsonNullable wrapper (jackson-databind-nullable) for this demo  -->
+                            <openApiNullable>false</openApiNullable>
+                            <dateLibrary>java8</dateLibrary>
+                            <serializableModel>true</serializableModel>
+                            <hideGenerationTimestamp>true</hideGenerationTimestamp>
+                        </configOptions>
+                    </configuration>
+                </execution>
+            </executions>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-compiler-plugin</artifactId>
+            <version>3.13.0</version>
+        </plugin>
+        <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>3.4.0</version>
+            <configuration>
+                <!--  no web.xml: everything is wired in WebAppInitializer  -->
+                <failOnMissingWebXml>false</failOnMissingWebXml>
+            </configuration>
+        </plugin>
+        <!--  Optional: "mvn cargo:run" downloads Tomcat 10 and deploys the war  -->
+        <plugin>
+            <groupId>org.codehaus.cargo</groupId>
+            <artifactId>cargo-maven3-plugin</artifactId>
+            <version>1.10.15</version>
+            <configuration>
+                <container>
+                    <containerId>tomcat10x</containerId>
+                    <zipUrlInstaller>
+                        <url>https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.28/bin/apache-tomcat-10.1.28.zip</url>
+                    </zipUrlInstaller>
+                </container>
+                <configuration>
+                    <properties>
+                        <cargo.servlet.port>8080</cargo.servlet.port>
+                    </properties>
+                </configuration>
+                <deployables>
+                    <deployable>
+                        <properties>
+                            <context>customer-api</context>
+                        </properties>
+                    </deployable>
+                </deployables>
+            </configuration>
+        </plugin>
+    </plugins>
+
+</project>
