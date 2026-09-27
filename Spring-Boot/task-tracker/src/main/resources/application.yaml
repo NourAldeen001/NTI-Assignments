@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: tasktracker
+  profiles:
+    active: "dev"
+
+logging:
+  level:
+    root: debug
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,env
+
+server:
+  port: 9090
+
+app:
+  name: "Task-R"
+  max-tasks: 50
+  default-page-size: 10
