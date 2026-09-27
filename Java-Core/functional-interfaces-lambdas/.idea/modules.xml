@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/java-labs all.iml" filepath="$PROJECT_DIR$/.idea/java-labs all.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lab1-functional-interfaces-lambdas/lab1-functional-interfaces-lambdas.iml" filepath="$PROJECT_DIR$/lab1-functional-interfaces-lambdas/lab1-functional-interfaces-lambdas.iml" />
+      <module fileurl="file://$PROJECT_DIR$/lab3-streams/lab3-streams.iml" filepath="$PROJECT_DIR$/lab3-streams/lab3-streams.iml" />
+    </modules>
+  </component>
+</project>
