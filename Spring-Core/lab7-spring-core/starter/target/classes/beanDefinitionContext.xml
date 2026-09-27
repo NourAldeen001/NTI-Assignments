@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd"> <!-- A7   default-init-method="customInit" default-destroy-method="customDestroy" -->
+
+<!--    &lt;!&ndash; TODO (6.1): register Greeter as a bean with id "greeter" &ndash;&gt;-->
+<!--    <bean id="greeter" class="com.example.Greeter"/>-->
+
+<!--    &lt;!&ndash; TODO (6.2/6.5/6.7): register Engine as a bean with id "engine" &ndash;&gt;-->
+<!--    <bean id="engine" class="com.example.Engine"/>-->
+
+<!--    &lt;!&ndash; TODO (6.6): register EmailNotifier (or SmsNotifier) as a bean with id "notifier" &ndash;&gt;-->
+<!--    <bean id="emailNotifier" class="com.example.EmailNotifier"/>-->
+
+<!--    <bean id="smsNotifier" class="com.example.SmsNotifier"/>-->
+
+<!--    &lt;!&ndash; TODO (6.2/6.3/6.4/6.6): register Car as a bean with id "car",-->
+<!--         wiring engine (constructor-arg or property), notifier (constructor-arg),-->
+<!--         and simple values for model/year (property value="...") &ndash;&gt;-->
+<!--    <bean id="car" class="com.example.Car">-->
+<!--        <constructor-arg ref="emailNotifier"/>-->
+<!--        <property name="engine" ref="engine"/>-->
+<!--        <property name="model" value="M3"/>-->
+<!--        <property name="year" value="2020"/>-->
+<!--    </bean>-->
+
+
+<!--    &lt;!&ndash; TODO (6.8): register paymentService, wiring the notifier bean &ndash;&gt;-->
+<!--    <bean id="paymentService" class="com.example.PaymentService">-->
+<!--        <constructor-arg ref="smsNotifier"/>-->
+<!--    </bean>-->
+<!--    &lt;!&ndash; TODO (6.8): register orderService, wiring the paymentService bean &ndash;&gt;-->
+<!--    <bean id="orderService" class="com.example.OrderService">-->
+<!--        <constructor-arg ref="paymentService"/>-->
+<!--    </bean>-->
+
+    <!-- =================================================================================== -->
+
+    <!-- PART B -->
+    <!-- B1 -->
+<!--    <bean id="engine" class="com.example.Engine">-->
+<!--        <property name="type" value="Hybrid"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="vehicle" name="car, automobile" class="com.example.Vehicle">-->
+<!--        <property name="color" value="red"/>-->
+<!--        <property name="engine" ref="engine"/>-->
+<!--    </bean>-->
+    <!-- B2 -->
+<!--    <bean id="engine" class="com.example.Engine">-->
+<!--        <property name="type" value="Hybrid"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="vehicle" name="car, automobile" class="com.example.Vehiclle" lazy-init="true">-->
+<!--        <property name="color" value="red"/>-->
+<!--        <property name="engine" ref="engine"/>-->
+<!--    </bean>-->
+
+    <!-- B3 -->
+<!--    <bean id="engine" class="com.example.Engine">-->
+<!--        <property name="type" value="Hybrid"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="vehicle1" name="car, automobile" class="com.example.Vehicle">-->
+<!--        <property name="color" value="red"/>-->
+<!--        <property name="engine" ref="engine"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="vehicle2" class="com.example.Vehicle" scope="prototype">-->
+<!--        <property name="color" value="orange"/>-->
+<!--        <property name="engine" ref="engine"/>-->
+<!--    </bean> -->
+
+    <!-- B4 -->
+<!--    <bean id="engine" class="com.example.Engine">-->
+<!--        <property name="type" value="Hybrid"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="baseVehicle" abstract="true">-->
+<!--        <property name="color" value="white" />-->
+<!--    </bean>-->
+
+<!--    <bean id="redCar" class="com.example.Vehicle" parent="baseVehicle">-->
+<!--        <property name="color" value="red" />-->
+<!--    </bean>-->
+
+    <!-- B5 -->
+<!--    <bean id="engine1" class="com.example.Engine" lazy-init="true">-->
+<!--    </bean>-->
+
+    <!-- B6 -->
+<!--    <bean id="engine1" class="com.example.Engine" /> -->
+
+<!--&lt;!&ndash;    <bean id="vehicle3" class="com.example.Vehicle" autowire="byType" />&ndash;&gt;-->
+<!--    <bean id="vehicle3" class="com.example.Vehicle" autowire="byName" />-->
+
+    <!-- B7 -->
+<!--    <bean id="engine1" class="com.example.Engine" autowire-candidate="false">-->
+<!--        <property name="type" value="Hybrid"/>-->
+<!--    </bean>-->
+<!--    <bean id="engine2" class="com.example.Engine">-->
+<!--        <property name="type" value="Electric"/>-->
+<!--    </bean>-->
+<!--    <bean id="vehicle3" class="com.example.Vehicle" autowire="byType" />-->
+
+    <!-- B8 -->
+<!--    <bean id="engine1" class="com.example.Engine" autowire-candidate="false">-->
+<!--        <property name="type" value="Hybrid"/>-->
+<!--    </bean>-->
+<!--    <bean id="engine2" class="com.example.Engine">-->
+<!--        <property name="type" value="Electric"/>-->
+<!--    </bean>-->
+<!--    <bean id="engine3" class="com.example.Engine" primary="true">-->
+<!--        <property name="type" value="Gasoline"/>-->
+<!--    </bean>-->
+<!--    <bean id="vehicle3" class="com.example.Vehicle" autowire="byType" />-->
+
+
+    <!-- B9 -->
+<!--    <bean id="engine" class="com.example.Engine" depends-on="logger">-->
+<!--        <property name="type" value="Hybrid"/>-->
+<!--    </bean>-->
+<!--    <bean id="logger" class="com.example.SimpleLogger" />-->
+
+
+    <!-- B10 -->
+<!--    <bean id="engine" class="com.example.Engine">-->
+<!--        <property name="type" value="Hybrid"/>-->
+<!--    </bean>-->
+<!--    <bean id="vehicle3" class="com.example.Vehicle" autowire="byType"-->
+<!--          init-method="create" destroy-method="destroy"/>-->
+
+    <!-- B11 -->
+    <!-- In case, we have *static method* into class like createSportsCar.
+     we don't need to make bean from class. We have (class attribute) -->
+<!--    <bean id="sportsCar" class="com.example.VehicleFactory" factory-method="createSportsCar" />-->
+
+    <!-- B12 -->
+<!--    <bean id="vehicleInstanceFactory" class="com.example.VehicleInstanceFactory"/>-->
+
+<!--    <bean id="sedan" factory-bean="vehicleInstanceFactory" factory-method="createSedan"/>-->
+
+    <!-- ========================================================================================================= -->
+
+    <!-- PART A -->
+
+    <!-- A1 -->
+<!--    <bean id="myBeanPostProcessor" class="com.example.partA.MyBeanPostProcessor"/>-->
+<!--    <bean id="userRepository" class="com.example.partA.UserRepository"-->
+<!--          init-method="customInit" destroy-method="customDestroy"/>-->
+
+<!--    <bean id="userService" class="com.example.partA.UserService" autowire="byType"-->
+<!--          init-method="customInit" destroy-method="customDestroy"/>-->
+
+    <!-- A2 -->
+<!--    <bean id="myBeanPostProcessor" class="com.example.partA.MyBeanPostProcessor"/>-->
+<!--    <bean id="userRepository" class="com.example.partA.UserRepository"/>-->
+
+<!--    <bean id="userService" class="com.example.partA.UserService" autowire="byType"/>-->
+
+    <!-- A3 -->
+<!--    <bean id="myBeanPostProcessor" class="com.example.partA.MyBeanPostProcessor"/>-->
+<!--    <bean id="userRepository" class="com.example.partA.UserRepository"-->
+<!--          init-method="customInit" destroy-method="customDestroy"/>-->
+
+<!--    <bean id="userService" class="com.example.partA.UserService" autowire="byType"-->
+<!--          init-method="customInit" destroy-method="customDestroy"/>-->
+
+    <!-- A4 -->
+<!--        <bean id="myBeanPostProcessor" class="com.example.partA.MyBeanPostProcessor"/>-->
+<!--        <bean id="userRepository" class="com.example.partA.UserRepository"-->
+<!--              init-method="customInit" destroy-method="customDestroy"/>-->
+
+<!--        <bean id="userService" class="com.example.partA.UserService" autowire="byType"-->
+<!--              init-method="customInit" destroy-method="customDestroy"/>-->
+
+    <!-- A5 -->
+<!--    <bean id="myBeanPostProcessor" class="com.example.partA.MyBeanPostProcessor"/>-->
+<!--    <bean id="userRepository" class="com.example.partA.UserRepository"-->
+<!--          init-method="customInit" destroy-method="customDestroy"/>-->
+
+<!--    <bean id="userService" class="com.example.partA.UserService" autowire="byType"-->
+<!--          init-method="customInit" destroy-method="customDestroy"/>-->
+
+<!--    <bean id="orderService" class="com.example.partA.OrderService"/>-->
+
+    <!-- A6 -->
+<!--    <bean id="myBeanPostProcessor" class="com.example.partA.MyBeanPostProcessor"/>-->
+<!--    <bean id="userRepository" class="com.example.partA.UserRepository"-->
+<!--          init-method="customInit" destroy-method="customDestroy"/>-->
+
+<!--    <bean id="userService" class="com.example.partA.UserService" autowire="byType" scope="prototype"-->
+<!--          init-method="customInit" destroy-method="customDestroy"/>-->
+
+    <!-- A7 -->
+<!--    <bean id="myBeanPostProcessor" class="com.example.partA.MyBeanPostProcessor"/>-->
+<!--    <bean id="userRepository" class="com.example.partA.UserRepository"/>-->
+
+<!--    <bean id="userService" class="com.example.partA.UserService" autowire="byType" scope="prototype"/>-->
+<!--    <bean id="orderService" class="com.example.partA.OrderService"/>-->
+
+    <!-- A8 -->
+    <bean id="myBeanPostProcessor" class="com.example.partA.MyBeanPostProcessor"/>
+    <bean id="userRepository" class="com.example.partA.UserRepository"/>
+
+    <bean id="userService" class="com.example.partA.UserService" autowire="byType" scope="prototype"/>
+
+</beans>
